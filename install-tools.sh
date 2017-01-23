@@ -7,6 +7,8 @@ mkdir -p $HOME/os161/tools
 mkdir -p $HOME/os161/tools/bin
 export PATH=$HOME/os161/tools/bin:$PATH
 
+cd $HOME/os161/toolbuild
+
 # Download, build and install binutils 
 wget http://www.eecs.harvard.edu/~dholland/os161/download/binutils-2.24+os161-2.1.tar.gz
 tar -zxf binutils-2.24+os161-2.1.tar.gz
