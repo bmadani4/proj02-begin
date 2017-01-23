@@ -3,6 +3,9 @@
 export PATH=$HOME/os161/tools/bin:$PATH
 mkdir -p $HOME/os161/root
 
+# make sure $HOME/os161/src pints to your os161 source code tree
+# mv <path-to-oslight-source-tree> $HOME/os161/src
+
 # configure userland tools
 cd $HOME/os161/src
 ./configure --ostree=$HOME/os161/root
