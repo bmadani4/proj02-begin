@@ -46,12 +46,12 @@ cd ..
 
 # Once configuration succeeds, compile and install gcc.
 cd buildgcc
-gmake
-gmake install
+make
+make install
 cd ..
 
 # Download, build, and install gdb 7.8
-wget http://www.eecs.harvard.edu/~dholland/os161/download/gdb-7.8+os161-2.1.tar.gz
+CC="gcc -std=gnu89" ./configure --target=mips-harvard-os161 --prefix=$HOME/os161/tools
 tar -zxf gdb-7.8+os161-2.1.tar.gz
 
 cd gdb-7.8+os161-2.1
