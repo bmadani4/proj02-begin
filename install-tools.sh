@@ -51,7 +51,7 @@ make install
 cd ..
 
 # Download, build, and install gdb 7.8
-CC="gcc -std=gnu89" ./configure --target=mips-harvard-os161 --prefix=$HOME/os161/tools
+wget http://www.eecs.harvard.edu/~dholland/os161/download/gdb-7.8+os161-2.1.tar.gz
 tar -zxf gdb-7.8+os161-2.1.tar.gz
 
 cd gdb-7.8+os161-2.1
@@ -60,7 +60,7 @@ touch intl/plural.c
 cd ..
 
 cd gdb-7.8+os161-2.1
-./configure --target=mips-harvard-os161 --prefix=$HOME/os161/tools
+CC="gcc -std=gnu89" ./configure --target=mips-harvard-os161 --prefix=$HOME/os161/tools
 make
 make install
 cd ..
