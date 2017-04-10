@@ -43,11 +43,13 @@
  */
 
 #include <types.h>
+#include <kern/errno.h>
 #include <spl.h>
 #include <proc.h>
 #include <current.h>
 #include <addrspace.h>
 #include <vnode.h>
+#include <filetable.h>
 
 /*
  * The process for the kernel; this holds all the kernel-only threads.
@@ -81,6 +83,7 @@ proc_create(const char *name)
 
 	/* VFS fields */
 	proc->p_cwd = NULL;
+	proc->p_filetable = NULL;
 
 	return proc;
 }
@@ -116,6 +119,10 @@ proc_destroy(struct proc *proc)
 		VOP_DECREF(proc->p_cwd);
 		proc->p_cwd = NULL;
 	}
+        if (proc->p_filetable) {
+                filetable_destroy(proc->p_filetable);
+                proc->p_filetable = NULL;
+        }
 
 	/* VM fields */
 	if (proc->p_addrspace) {

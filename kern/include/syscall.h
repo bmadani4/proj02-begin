@@ -59,4 +59,9 @@ __DEAD void enter_new_process(int argc, userptr_t argv, userptr_t env,
 int sys_reboot(int code);
 int sys___time(userptr_t user_seconds, userptr_t user_nanoseconds);
 
+int sys_open(const_userptr_t filename, int flags, mode_t mode, int *retval);
+int sys_read(int fd, userptr_t buf, size_t size, int *retval);
+
+/* You need to add more for sys_encrypt, sys_write, and sys_close */
+
 #endif /* _SYSCALL_H_ */
