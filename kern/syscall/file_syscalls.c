@@ -46,7 +46,6 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	(void) kpath; // suppress compilation warning until code gets written
 	(void) file; // suppress compilation warning until code gets written
 
-
 	return result;
 }
 
@@ -56,19 +55,19 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 int
 sys_read(int fd, userptr_t buf, size_t size, int *retval)
 {
-	int result = 0;
+       int result = 0;
 
-	/* 
-	 * Your implementation of system call read starts here.  
-	 *
-	 * Check the design document design/filesyscall.txt for the steps
-	 */
-	(void) fd; // suppress compilation warning until code gets written
-	(void) buf; // suppress compilation warning until code gets written
-	(void) size; // suppress compilation warning until code gets written
-	(void) retval; // suppress compilation warning until code gets written
+       /* 
+        * Your implementation of system call read starts here.  
+        *
+        * Check the design document design/filesyscall.txt for the steps
+        */
+       (void) fd; // suppress compilation warning until code gets written
+       (void) buf; // suppress compilation warning until code gets written
+       (void) size; // suppress compilation warning until code gets written
+       (void) retval; // suppress compilation warning until code gets written
 
-	return result;
+       return result;
 }
 
 /*
@@ -82,4 +81,3 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
 /* 
 * encrypt() - read and encrypt the data of a file
 */
-

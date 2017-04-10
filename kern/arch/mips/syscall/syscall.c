@@ -111,6 +111,10 @@ syscall(struct trapframe *tf)
 				 (userptr_t)tf->tf_a1);
 		break;
 
+            case SYS__exit:
+  	       sys__exit(tf->tf_a0);
+ 	       panic("Returning from exit\n");
+               break;
 
             /* Sample cases: open and read */
             case SYS_open:
@@ -127,8 +131,9 @@ syscall(struct trapframe *tf)
                         (userptr_t)tf->tf_a1,
                         tf->tf_a2,
                         &retval);
+                break;
 
-	    /* Project 2:
+            /* Project 2:
              * Add more for encrypt, close, and write . */
 
 	    default:

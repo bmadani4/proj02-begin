@@ -88,7 +88,9 @@ main(int argc, char *argv[])
 	if (rv<0) {
 		err(1, "%s: read", file);
 	}
+
 	rv = close(fd);
+	printf("Closing fd=%d retval=%d.\n", fd, rv);
 	if (rv<0) {
 		err(1, "%s: close (2nd time)", file);
 	}

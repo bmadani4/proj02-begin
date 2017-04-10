@@ -229,6 +229,29 @@ proc_create_runprogram(const char *name)
 }
 
 /*
+ * Make the current process exit.
+ */
+void
+proc__exit(int status)
+{
+       struct proc *proc = curproc;
+
+       /* The kernel isn't supposed to exit. */
+       KASSERT(proc != kproc);
+
+       kprintf("Proc exit status %d \n", status);
+       /* Detach from the process and attach to the kernel process. */
+       KASSERT(curthread->t_proc == proc);
+       proc_remthread(curthread);
+       proc_addthread(kproc, curthread);
+
+       /* Now we can destroy the process. */
+       proc_destroy(proc);
+
+       thread_exit();
+}
+
+/*
  * Add a thread to a process. Either the thread or the process might
  * or might not be current.
  *
