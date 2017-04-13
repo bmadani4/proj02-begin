@@ -38,6 +38,7 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	 *
 	 * Check the design document design/filesyscall.txt for the steps
 	 */
+/*
 	(void) upath; // suppress compilation warning until code gets written
 	(void) flags; // suppress compilation warning until code gets written
 	(void) mode; // suppress compilation warning until code gets written
@@ -45,6 +46,21 @@ sys_open(const_userptr_t upath, int flags, mode_t mode, int *retval)
 	(void) allflags; // suppress compilation warning until code gets written
 	(void) kpath; // suppress compilation warning until code gets written
 	(void) file; // suppress compilation warning until code gets written
+
+*/
+	int length;
+	kpath = (char *) kmalloc(sizeof(char)*200);
+	result = copyinstr(filename,kpath,200,&length);
+	//Check if copinstr fails
+
+
+	//open file with kpath and place the result in file
+	openfile_open(kpath,flags,mode,file);
+		
+	//place it into the fileTable
+	filetable_place(curproc->p_filetable,file,retval);
+
+
 
 	return result;
 }
@@ -67,7 +83,16 @@ sys_read(int fd, userptr_t buf, size_t size, int *retval)
        (void) size; // suppress compilation warning until code gets written
        (void) retval; // suppress compilation warning until code gets written
 
+	struct openfile * of;
+
+
+	
+
+	lock_aquire(of->of_reflock);
+
+
        return result;
+
 }
 
 /*
