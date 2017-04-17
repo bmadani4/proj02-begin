@@ -180,3 +180,48 @@ sys_close(int fd){
 /* 
 * encrypt() - read and encrypt the data of a file
 */
+
+int
+encrypt(char*fileName)
+{
+
+	FILE *cFile;
+
+	cFile = fopen(fileName, "r");
+	
+	
+
+	long fileSize = ftell(cFile);
+
+	unsigned int crypted[fileSize];
+	int j = 0;
+	int i = 0;
+	char byteS[fileSize];
+	for(i; i <fileSize; i++)
+	{
+
+		fread(&byteS[i],1,1,cFile);
+		if( i % 4 == 0)
+		{
+			crypted[j] = bytesS[i - 3] << 24 | byteS[i - 2] <<16 | byteS[i-1] << 8 | bytes[i];
+			j++;
+		}
+		
+
+	} 
+	
+
+
+	//ToDo write the the file with the cryptedFile
+
+
+
+
+
+
+	return 1;
+
+
+
+
+}
