@@ -182,41 +182,70 @@ sys_close(int fd){
 */
 
 int
-encrypt(char*fileName)
+encrypt(const_userptr_t upath,int fileS)
 {
 
-	FILE *cFile;
-
-	cFile = fopen(fileName, "r");
 	
-	
-
-	long fileSize = ftell(cFile);
-
-	unsigned int crypted[fileSize];
-	int j = 0;
-	int i = 0;
-	char byteS[fileSize];
-	for(i; i <fileSize; i++)
-	{
-
-		fread(&byteS[i],1,1,cFile);
-		if( i % 4 == 0)
-		{
-			crypted[j] = bytesS[i - 3] << 24 | byteS[i - 2] <<16 | byteS[i-1] << 8 | bytes[i];
-			j++;
-		}
 		
+	//const int allflags = O_ACCMODE | O_CREAT | O_EXCL | O_TRUNC | O_APPEND | O_NOCTTY;
 
-	} 
+	char kpath[PATH_MAX];
+	struct openfile *file;
+	struct filetable *ft = curproc->p_filetable;
+	int result = 0;
+	int flags, mode_t mode, int *retval;
+	flags = 0;
+	mode = 0;
 	
-
-
-	//ToDo write the the file with the cryptedFile
-
-
-
-
+	int endFlag = 0;
+	int fd = sys_open(upath,O_RDONLY,mode,retval);
+	char byteBuffer[4];
+	unsigned int mask1 = 0;
+	unsigned int mask2 = 0;
+	unsigned int retArray[fileS/4];
+	int i = 0;
+	do{
+		mask1 = 0;
+		sys_read(fd,byteBuffer,4,retval);
+		//Do bitwise here
+		if(byteBuffer[0] == EOF)
+			break;
+		mask2 = mask2 | byteBuffer[0];
+		mask2 << 24;
+		mask1 = mask1 | mask2;
+		mask2 =0;
+		if(byteBuffer[1] == EOF)
+			break;
+		mask2 = mask2 | byteBuffer[1];
+		mask2 << 16;
+		mask1 = mask1 | mask2;
+		mask2 =0;
+		if(byteBuffer[2] == EOF)
+			break;
+		mask2 = mask2 | byteBuffer[2];
+		mask2 <<8;
+		mask1 = mask1 | mask2;
+		mask2 =0;
+		if(byteBuffer[3] == EOF)
+			break;
+		mask2 = mask2 | byteBuffer[3];
+		mask1 = mask1 | mask2;
+		mask2 =0;
+		
+		
+		mask1 = (mask1 >> 10) | (mask1 << (22))
+		retArray[i] = mask1;
+		i++;
+	}while(endFlag == 0)
+	
+	sys_close(fd);
+	
+	fd = sys_open(upath,O_WRONLY|O_CREAT|O_TRUNC,mode,retval);
+	
+		
+	sys_write(fd,retArray,fileS/4,retval);
+	
+	sys_close(fd);	
 
 
 	return 1;
