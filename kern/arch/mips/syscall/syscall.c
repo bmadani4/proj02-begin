@@ -146,6 +146,10 @@ syscall(struct trapframe *tf)
             /* Project 2:
              * Add more for encrypt, close, and write . */
 
+	     case SYS_encrypt:
+		err = sys_encrypt((userptr_t)tf->tf_a0, tf->tf_a1);
+		break;
+
 	    default:
 		kprintf("Unknown syscall %d\n", callno);
 		err = ENOSYS;
